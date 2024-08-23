@@ -24,6 +24,7 @@ a:hover {
 
 body {
   margin: 0;
+  width: 100%;
   display: flex;
   place-items: center;
   min-width: 320px;
@@ -59,10 +60,9 @@ button:focus-visible {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  font-family: 'Ubuntu', 'Arial Narrow', Arial, sans-serif;
+  color: #003f56;
+  width: 100vw;
 }
 
 @media (prefers-color-scheme: light) {

@@ -1,20 +1,33 @@
 <script setup lang="ts">
-import HelloWorld from './components/HelloWorld.vue'
+import InputLink from "../src/components/InputLink.vue";
+// import DataTimePicker from "./components/DataTimePicker.vue";
+// import MultiSelect from "./components/MultiSelect.vue";
+// import TextInCell from "./components/TextInCell.vue";
+
 </script>
 
 <template>
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="/vite.svg" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://vuejs.org/" target="_blank">
-      <img src="./assets/vue.svg" class="logo vue" alt="Vue logo" />
-    </a>
+  <div class="container">
+    <InputLink></InputLink>
+  <!--<MultiSelect></MultiSelect>-->
+  <!--  <TextInCell></TextInCell>-->
+  <!--  <DataTimePicker></DataTimePicker>-->
   </div>
-  <HelloWorld msg="Vite + Vue" />
 </template>
 
 <style scoped>
+
+
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  background-color: #01628524;
+  margin: 0;
+  padding: 0;
+}
 .logo {
   height: 6em;
   padding: 1.5em;
