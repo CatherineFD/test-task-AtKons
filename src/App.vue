@@ -1,17 +1,19 @@
 <script setup lang="ts">
-import InputLink from "../src/components/InputLink.vue";
+// import InputLink from "../src/components/InputLink.vue";
 // import DataTimePicker from "./components/DataTimePicker.vue";
 // import MultiSelect from "./components/MultiSelect.vue";
 // import TextInCell from "./components/TextInCell.vue";
+import TableWithSearch from "./components/TableWithSearch.vue";
 
 </script>
 
 <template>
   <div class="container">
-    <InputLink></InputLink>
-  <!--<MultiSelect></MultiSelect>-->
+<!--    <InputLink></InputLink>-->
+<!--  <MultiSelect></MultiSelect>-->
   <!--  <TextInCell></TextInCell>-->
   <!--  <DataTimePicker></DataTimePicker>-->
+    <TableWithSearch></TableWithSearch>
   </div>
 </template>
 
@@ -21,8 +23,7 @@ import InputLink from "../src/components/InputLink.vue";
 .container {
   display: flex;
   justify-content: center;
-  align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 
   background-color: #01628524;
   margin: 0;

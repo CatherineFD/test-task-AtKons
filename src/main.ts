@@ -3,6 +3,8 @@ import './style.css';
 import App from './App.vue';
 import PrimeVue from 'primevue/config';
 import 'primeicons/primeicons.css';
+import 'primevue/resources/themes/saga-blue/theme.css';
+import 'primevue/resources/primevue.css';
 
 
 const app = createApp(App);

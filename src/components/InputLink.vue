@@ -1,17 +1,9 @@
 <template>
-  <div class="container">
-    <InputText
-        v-if="title == '' || isEditInput"
-        type="text"
-        v-model="url"
-        @keydown.enter="fetchTitle"
-        @blur="fetchTitle"
-        placeholder="https://"
-    ></InputText>
-    <p v-else>{{title}}</p>
-    <EditComponent v-if="!isEditInput" @edit="isEditInput = !isEditInput"></EditComponent>
+  <div class="wrapper">
+    <div>
+      <InputEditLink :link="url" :title="title" @updateLink="updateLink"></InputEditLink>
+    </div>
   </div>
-{{ isEditInput }}
 </template>
 
 <script lang="ts">
@@ -19,19 +11,26 @@ import {defineComponent, ref} from "vue";
 import InputText from 'primevue/inputtext';
 import axios from 'axios';
 import EditComponent from "./UI/EditComponent.vue";
-
+import InputEditLink from "../components/UI/InputEditLink.vue";
 
 export default  defineComponent({
   components: {
     InputText,
-    EditComponent
+    EditComponent,
+    InputEditLink
+  },
+  methods: {
+    updateLink(link: string) {
+      this.url = link;
+      this.fetchTitle();
+    }
   },
   setup() {
     const url = ref<string>('');
     const title = ref<string | null>(null);
-    const isEditInput= ref<boolean>(false);
 
     const fetchTitle = async () => {
+
       if (url.value) {
         try {
           const proxyUrl = 'https://api.allorigins.win/get?url=';
@@ -48,14 +47,12 @@ export default  defineComponent({
         } catch (error) {
           title.value = 'Error fetching title';
         }
-        isEditInput.value = false;
       }
     };
     return {
       url,
       title,
-      fetchTitle,
-      isEditInput
+      fetchTitle
     }
   }
 })
@@ -63,9 +60,12 @@ export default  defineComponent({
 </script>
 
 <style>
-.container {
+.wrapper {
+  position: relative;
+  width: 100%;
+  margin: 20px auto 0;
   display: flex;
-  flex-direction: column;
+  justify-content: center;
 }
 
 </style>
