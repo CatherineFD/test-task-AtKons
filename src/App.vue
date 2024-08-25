@@ -1,32 +1,21 @@
 <script setup lang="ts">
-// import InputLink from "../src/components/InputLink.vue";
-// import DataTimePicker from "./components/DataTimePicker.vue";
-// import MultiSelect from "./components/MultiSelect.vue";
-// import TextInCell from "./components/TextInCell.vue";
-import TableWithSearch from "./components/TableWithSearch.vue";
-
+import NavBar from "./components/UI/NavBar.vue";
 </script>
 
 <template>
+  <NavBar></NavBar>
   <div class="container">
-<!--    <InputLink></InputLink>-->
-<!--  <MultiSelect></MultiSelect>-->
-  <!--  <TextInCell></TextInCell>-->
-  <!--  <DataTimePicker></DataTimePicker>-->
-    <TableWithSearch></TableWithSearch>
+    <router-view></router-view>
   </div>
 </template>
 
 <style scoped>
-
-
 .container {
   display: flex;
   justify-content: center;
   min-height: 100vh;
-
   background-color: #01628524;
-  margin: 0;
+  margin: 60px 0 0;
   padding: 0;
 }
 .logo {

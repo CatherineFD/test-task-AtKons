@@ -3,9 +3,11 @@ import InputLink from "../components/InputLink.vue";
 import MultiSelect from "../components/MultiSelect.vue";
 import TextInCell from "../components/TextInCell.vue";
 import DataTimePicker from "../components/DataTimePicker.vue";
+import TableWithSearch from "../components/TableWithSearch.vue";
 
 
 const routes: Array<RouteRecordRaw> = [
+    { path: '/', redirect: '/input-link' },
     {
         path: '/input-link',
         name: 'InputLink',
@@ -27,14 +29,14 @@ const routes: Array<RouteRecordRaw> = [
         component: DataTimePicker,
     },
     {
-        path: '/about',
-        name: 'MultiSelect',
-        component: MultiSelect,
+        path: '/table-with-search',
+        name: 'TableWithSearch',
+        component: TableWithSearch,
     },
 ];
 
 const router = createRouter({
-    history: createWebHistory(process.env.BASE_URL),
+    history: createWebHistory('/test-task-AtKons/'),
     routes,
 });
 

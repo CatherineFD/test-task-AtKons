@@ -1,10 +1,10 @@
 <script lang="ts">
-import DatePicker from 'primevue/datepicker';
+// import DatePicker from 'primevue/datepicker';
 import {computed, defineComponent, ref} from "vue";
 export default defineComponent
 ({
   components: {
-    DatePicker
+    // DatePicker
   },
   setup() {
     const date = ref<Date | null>(null);
@@ -26,16 +26,16 @@ export default defineComponent
 </script>
 
 <template>
-  <div class="container">
+  <div class="wrapper">
     <p>Время: {{formattedTime}}</p>
-    <DatePicker
-        class="date_picker"
-        v-model="date"
-        date-format="HH:mm"
-        show-icon
-        icon-display="input"
-        time-only
-    />
+<!--    <DatePicker-->
+<!--        class="date_picker"-->
+<!--        v-model="date"-->
+<!--        date-format="HH:mm"-->
+<!--        show-icon-->
+<!--        icon-display="input"-->
+<!--        time-only-->
+<!--    />-->
 
     <button @click="clear()">Очистить</button>
   </div>
@@ -45,8 +45,8 @@ export default defineComponent
 <style scoped>
 @import 'primeicons/primeicons.css';
 
-.container {
-  min-width: 500px;
+.wrapper {
+  max-width: 500px;
   display: flex;
   flex-direction: column;
   }

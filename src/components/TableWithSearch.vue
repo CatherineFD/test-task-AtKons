@@ -171,7 +171,7 @@ export default defineComponent({
     }
   },
   methods: {
-    getStatusClass(status) {
+    getStatusClass(status: string) {
       switch (status) {
         case 'INSTOCK':
           return 'btn-green';
@@ -183,7 +183,7 @@ export default defineComponent({
           return '';
       }
     },
-    getStars(reviews) {
+    getStars(reviews: number) {
       const fullStar = '<i class="pi pi-star-fill" style="color: gold;"></i>';
       const halfStar = '<i class="pi pi-star-fill" style="color: gold; clip-path: inset(0 50% 0 0);"></i>';
       const emptyStar = '<i class="pi pi-star" style="color: gold;"></i>';
@@ -201,7 +201,7 @@ export default defineComponent({
 
       return starsHtml;
     },
-    getImagePath(imageName) {
+    getImagePath(imageName: string) {
       console.log(`../assets/img/${imageName}`)
       return new URL(`../assets/img/${imageName}`, import.meta.url).href;
     }
@@ -214,7 +214,7 @@ export default defineComponent({
 <template>
   <div class="wrapper">
     <InputGroup>
-      <div class="" style="width: 70%; display: flex; justify-content: space-between; position: relative">
+      <div class="" style="width: 80%; display: flex; justify-content: space-between; position: relative">
         <div style="width: 100%; position: relative">
           <InputText v-model="globalFilter" placeholder="Поиск..." style="width: 100%"/>
           <span v-if="globalFilter" class="clear-icon pi pi-times"></span>
@@ -273,6 +273,8 @@ export default defineComponent({
   width: 100%;
   margin: 20px auto 0;
   max-width: 1000px;
+  display: flex;
+  flex-direction: column;
 }
 
 .button__search {

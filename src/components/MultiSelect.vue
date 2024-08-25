@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="wrapper">
     <div>
         <div @click="toogle" class="button">
           <div class="pi pi-angle-down" :class="{'pi-angle-down': !isShowList, 'pi-angle-up': isShowList}"></div>
@@ -89,7 +89,7 @@ export default defineComponent
 </script>
 
 <style scoped>
-.container {
+.wrapper {
   position: relative;
   width: 100%;
   margin: 20px auto 0;

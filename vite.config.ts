@@ -3,6 +3,6 @@ import vue from '@vitejs/plugin-vue'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  base: '/test-task-AtKons',
+  base: '/test-task-AtKons/',
   plugins: [vue()],
 })
