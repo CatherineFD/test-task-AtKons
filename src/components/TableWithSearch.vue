@@ -276,26 +276,26 @@ export default defineComponent({
         :totalRecords="totalRecords"
         :rows-per-page-options="[5, 10, 15, 20, 50]"
     >
-      <Column field="code" header="Code" sortable="true"></Column>
-      <Column field="name" header="Name" sortable="true"></Column>
+      <Column field="code" header="Code" :sortable="true"></Column>
+      <Column field="name" header="Name" :sortable="true"></Column>
       <Column field="img" header="Image">
         <template #body="slotProps">
           <img :src="getImagePath(slotProps.data.img)" alt="img">
         </template>
       </Column>
-      <Column field="price" header="Price" sortable="true">
+      <Column field="price" header="Price" :sortable="true">
         <template #body="slotProps">
           ${{ slotProps.data.price.toFixed(2) }}
         </template>
       </Column>
-      <Column field="category" header="Category" sortable="true"></Column>
-      <Column field="reviews" header="Reviews" sortable="true">
+      <Column field="category" header="Category" :sortable="true"></Column>
+      <Column field="reviews" header="Reviews" :sortable="true">
         <template #body="slotProps">
           <span v-html="getStars(slotProps.data.reviews)"></span>
         </template>
       </Column>
 
-      <Column field="status" header="Status" sortable="true">
+      <Column field="status" header="Status" :sortable="true">
         <template #body="slotProps">
           <div class="btn" :class="getStatusClass(slotProps.data.status)">
             {{ slotProps.data.status }}

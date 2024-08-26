@@ -27,7 +27,7 @@ export default  defineComponent({
   },
   setup() {
     const url = ref<string>('');
-    const title = ref<string | null>(null);
+    const title = ref<string | undefined>(undefined);
 
     const fetchTitle = async () => {
 
