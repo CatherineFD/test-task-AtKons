@@ -1,12 +1,20 @@
 <script lang="ts">
 import DataTable from 'primevue/datatable';
 import Column from 'primevue/column';
-import {defineComponent} from "vue";
+import {computed, defineComponent, ref, onMounted} from "vue";
 import MultiSelect from 'primevue/multiselect';
 import InputGroup from 'primevue/inputgroup';
 import InputText from 'primevue/inputtext';
 
-
+interface ProductObject {
+  code: string;
+  name: string;
+  img: string;
+  price: number;
+  category: string;
+  reviews: number;
+  status: string;
+}
 export default defineComponent({
   components: {
     DataTable,
@@ -15,159 +23,190 @@ export default defineComponent({
     InputGroup,
     InputText
   },
-  data() {
+  setup() {
+    const globalFilter = ref('');
+    const sortedField = ref<string[]>([]);
+    const fieldOptions = ref<{ name: string; value: string }[]>([
+      {name: 'Code', value:'code'},
+      {name: 'Name', value: 'name'},
+      {name: 'Image', value: 'img'},
+      {name: 'Price', value: 'price'},
+      {name: 'Category', value: 'category'},
+      {name: 'Reviews', value: 'reviews'},
+      {name: 'Status', value: 'status'}
+    ]);
+
+    const products = ref<ProductObject[]>([
+      {
+        code: '001',
+        name: 'Product 1',
+        img: './assets/img/EPy-4lhX0AU26TI.jpg',
+        price: 29.99,
+        category: 'Category A',
+        reviews: 5,
+        status: 'INSTOCK'
+      },
+      {
+        code: '002',
+        name: 'Product 2',
+        img: 'path/to/image2.jpg',
+        price: 49.99,
+        category: 'Category B',
+        reviews: 4,
+        status: 'LOWSTOCK'
+      },
+      {
+        code: '003',
+        name: 'Product 3',
+        img: 'path/to/image3.jpg',
+        price: 39.99,
+        category: 'Category A',
+        reviews: 5,
+        status: 'OUTOFSTOCK'
+      },
+      {
+        code: '004',
+        name: 'Product 4',
+        img: 'path/to/image4.jpg',
+        price: 59.99,
+        category: 'Category C',
+        reviews: 5,
+        status: 'LOWSTOCK'
+      },
+      {
+        code: '005',
+        name: 'Product 5',
+        img: 'path/to/image5.jpg',
+        price: 19.99,
+        category: 'Category B',
+        reviews: 3.5,
+        status: 'LOWSTOCK'
+      },
+      {
+        code: '001',
+        name: 'Product 1',
+        img: 'path/to/image1.jpg',
+        price: 29.99,
+        category: 'Category A',
+        reviews: 2,
+        status: 'INSTOCK'
+      },
+      {
+        code: '002',
+        name: 'Product 2',
+        img: 'path/to/image2.jpg',
+        price: 49.99,
+        category: 'Category B',
+        reviews: 5,
+        status: 'OUTOFSTOCK'
+      },
+      {
+        code: '003',
+        name: 'Product 3',
+        img: 'path/to/image3.jpg',
+        price: 39.99,
+        category: 'Category A',
+        reviews: 4,
+        status: 'INSTOCK'
+      },
+      {
+        code: '004',
+        name: 'Product 4',
+        img: 'path/to/image4.jpg',
+        price: 59.99,
+        category: 'Category C',
+        reviews: 3,
+        status: 'INSTOCK'
+      },
+      {
+        code: '005',
+        name: 'Product 5',
+        img: 'path/to/image5.jpg',
+        price: 19.99,
+        category: 'Category B',
+        reviews: 2,
+        status: 'OUTOFSTOCK'
+      },
+      {
+        code: '001',
+        name: 'Product 1',
+        img: 'path/to/image1.jpg',
+        price: 29.99,
+        category: 'Category A',
+        reviews: 4,
+        status: 'INSTOCK'
+      },
+      {
+        code: '002',
+        name: 'Product 2',
+        img: 'path/to/image2.jpg',
+        price: 49.99,
+        category: 'Category B',
+        reviews: 5,
+        status: 'OUTOFSTOCK'
+      },
+      {
+        code: '003',
+        name: 'Product 3',
+        img: 'path/to/image3.jpg',
+        price: 39.99,
+        category: 'Category A',
+        reviews: 2,
+        status: 'INSTOCK'
+      },
+      {
+        code: '004',
+        name: 'Product 4',
+        img: 'path/to/image4.jpg',
+        price: 59.99,
+        category: 'Category C',
+        reviews: 1,
+        status: 'INSTOCK'
+      },
+      {
+        code: '005',
+        name: 'Product 5',
+        img: 'path/to/image5.jpg',
+        price: 19.99,
+        category: 'Category B',
+        reviews: 5,
+        status: 'INSTOCK'
+      }
+  ]);
+
+
+    const filteredProducts = ref<ProductObject[]>([]);
+
+    const filterProducts = () => {
+      const selectedFields = sortedField.value;
+      filteredProducts.value = products.value.filter(product => {
+        return (
+            (selectedFields.length === 0 || selectedFields.some(field => product[field as keyof ProductObject]?.toString().toLowerCase().includes(globalFilter.value.toLowerCase()))) &&
+            (globalFilter.value === '' || Object.values(product).some(value => value.toString().toLowerCase().includes(globalFilter.value.toLowerCase())))
+        );
+      });
+    };
+
+    const clearFilter = () => {
+      globalFilter.value = '';
+      sortedField.value = [];
+      filterProducts();
+    };
+
+    const totalRecords = computed(() => filteredProducts.value.length);
+
+    onMounted(() => {
+      filteredProducts.value = [...products.value];
+    });
+
     return {
-      products: [
-        {
-          code: '001',
-          name: 'Product 1',
-          img: './assets/img/EPy-4lhX0AU26TI.jpg',
-          price: 29.99,
-          category: 'Category A',
-          reviews: 5,
-          status: 'INSTOCK'
-        },
-        {
-          code: '002',
-          name: 'Product 2',
-          img: 'path/to/image2.jpg',
-          price: 49.99,
-          category: 'Category B',
-          reviews: 4,
-          status: 'LOWSTOCK'
-        },
-        {
-          code: '003',
-          name: 'Product 3',
-          img: 'path/to/image3.jpg',
-          price: 39.99,
-          category: 'Category A',
-          reviews: 5,
-          status: 'OUTOFSTOCK'
-        },
-        {
-          code: '004',
-          name: 'Product 4',
-          img: 'path/to/image4.jpg',
-          price: 59.99,
-          category: 'Category C',
-          reviews: 5,
-          status: 'LOWSTOCK'
-        },
-        {
-          code: '005',
-          name: 'Product 5',
-          img: 'path/to/image5.jpg',
-          price: 19.99,
-          category: 'Category B',
-          reviews: 3.5,
-          status: 'LOWSTOCK'
-        },
-        {
-          code: '001',
-          name: 'Product 1',
-          img: 'path/to/image1.jpg',
-          price: 29.99,
-          category: 'Category A',
-          reviews: 2,
-          status: 'INSTOCK'
-        },
-        {
-          code: '002',
-          name: 'Product 2',
-          img: 'path/to/image2.jpg',
-          price: 49.99,
-          category: 'Category B',
-          reviews: 5,
-          status: 'OUTOFSTOCK'
-        },
-        {
-          code: '003',
-          name: 'Product 3',
-          img: 'path/to/image3.jpg',
-          price: 39.99,
-          category: 'Category A',
-          reviews: 4,
-          status: 'INSTOCK'
-        },
-        {
-          code: '004',
-          name: 'Product 4',
-          img: 'path/to/image4.jpg',
-          price: 59.99,
-          category: 'Category C',
-          reviews: 3,
-          status: 'INSTOCK'
-        },
-        {
-          code: '005',
-          name: 'Product 5',
-          img: 'path/to/image5.jpg',
-          price: 19.99,
-          category: 'Category B',
-          reviews: 2,
-          status: 'OUTOFSTOCK'
-        },
-        {
-          code: '001',
-          name: 'Product 1',
-          img: 'path/to/image1.jpg',
-          price: 29.99,
-          category: 'Category A',
-          reviews: 4,
-          status: 'INSTOCK'
-        },
-        {
-          code: '002',
-          name: 'Product 2',
-          img: 'path/to/image2.jpg',
-          price: 49.99,
-          category: 'Category B',
-          reviews: 5,
-          status: 'OUTOFSTOCK'
-        },
-        {
-          code: '003',
-          name: 'Product 3',
-          img: 'path/to/image3.jpg',
-          price: 39.99,
-          category: 'Category A',
-          reviews: 2,
-          status: 'INSTOCK'
-        },
-        {
-          code: '004',
-          name: 'Product 4',
-          img: 'path/to/image4.jpg',
-          price: 59.99,
-          category: 'Category C',
-          reviews: 1,
-          status: 'INSTOCK'
-        },
-        {
-          code: '005',
-          name: 'Product 5',
-          img: 'path/to/image5.jpg',
-          price: 19.99,
-          category: 'Category B',
-          reviews: 5,
-          status: 'INSTOCK'
-        }
-      ],
-      globalFilter: '',
-      totalRecords: 20,
-      sortedField: '',
-      fieldOptions: [
-        {name: 'Code', value:'code'},
-        {name: 'Name', value: 'name'},
-        {name: 'Image', value: 'img'},
-        {name: 'Price', value: 'price'},
-        {name: 'Category', value: 'category'},
-        {name: 'Reviews', value: 'reviews'},
-        {name: 'Status', value: 'status'}
-      ],
-      paginatorFirstItem: 1,
-      paginatorLastItem: 10,
+      sortedField,
+      globalFilter,
+      totalRecords,
+      filterProducts,
+      fieldOptions,
+      filteredProducts,
+      clearFilter
     }
   },
   methods: {
@@ -202,7 +241,6 @@ export default defineComponent({
       return starsHtml;
     },
     getImagePath(imageName: string) {
-      console.log(`../assets/img/${imageName}`)
       return new URL(`../assets/img/${imageName}`, import.meta.url).href;
     }
   },
@@ -217,26 +255,27 @@ export default defineComponent({
       <div class="" style="width: 80%; display: flex; justify-content: space-between; position: relative">
         <div style="width: 100%; position: relative">
           <InputText v-model="globalFilter" placeholder="Поиск..." style="width: 100%"/>
-          <span v-if="globalFilter" class="clear-icon pi pi-times"></span>
+          <span v-if="globalFilter" class="clear-icon pi pi-times" @click="clearFilter"></span>
         </div>
-        <button class="button__search">Search</button>
+        <button class="button__search" @click="filterProducts">Search</button>
       </div>
-      <MultiSelect v-model="sortedField" :options="fieldOptions" optionLabel="name"
-                   optionValue="value" placeholder="Поля таблицы"></MultiSelect>
+      <MultiSelect
+          v-model="sortedField"
+          :options="fieldOptions"
+          optionLabel="name"
+          optionValue="value"
+          placeholder="Поля таблицы"
+      ></MultiSelect>
     </InputGroup>
 
     <DataTable
-        :value="products"
+        :value="filteredProducts"
         :paginator="true"
         :rows="10"
         :globalFilter="globalFilter"
         :totalRecords="totalRecords"
         :rows-per-page-options="[5, 10, 15, 20, 50]"
-        :current-page-report-template="`Showing {first} to {last} of {totalRecords} products`"
     >
-      <template #paginatorleft>
-        <span>Showing {{ paginatorFirstItem }} to {{ paginatorLastItem }} of {{ totalRecords }} products</span>
-      </template>
       <Column field="code" header="Code" sortable="true"></Column>
       <Column field="name" header="Name" sortable="true"></Column>
       <Column field="img" header="Image">

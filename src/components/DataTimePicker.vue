@@ -1,10 +1,10 @@
 <script lang="ts">
-// import DatePicker from 'primevue/datepicker';
+import Calendar from 'primevue/calendar';
 import {computed, defineComponent, ref} from "vue";
 export default defineComponent
 ({
   components: {
-    // DatePicker
+    Calendar
   },
   setup() {
     const date = ref<Date | null>(null);
@@ -20,7 +20,11 @@ export default defineComponent
       date.value = null;
     };
 
-    return {date, formattedTime, clear}
+    const setCurrentDateTime = () => {
+      date.value = new Date();
+    }
+
+    return {date, formattedTime, clear, setCurrentDateTime}
   }
 })
 </script>
@@ -28,16 +32,22 @@ export default defineComponent
 <template>
   <div class="wrapper">
     <p>Время: {{formattedTime}}</p>
-<!--    <DatePicker-->
-<!--        class="date_picker"-->
-<!--        v-model="date"-->
-<!--        date-format="HH:mm"-->
-<!--        show-icon-->
-<!--        icon-display="input"-->
-<!--        time-only-->
-<!--    />-->
+    <Calendar
+        class="date_picker"
+        v-model="date"
+        date-format="HH:mm"
+        show-icon
+        icon-display="input"
+        time-only
+    />
 
-    <button @click="clear()">Очистить</button>
+
+    <div class="block__button">
+      <button @click="setCurrentDateTime">Сегодня</button>
+
+      <button @click="clear()">Очистить</button>
+    </div>
+
   </div>
 
 </template>
@@ -53,9 +63,15 @@ export default defineComponent
 
 .date_picker {
   min-width: 100px;
-  min-height: 100px;
   margin-bottom: 200px;
   width: 100%;
+}
+
+.block__button {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 
